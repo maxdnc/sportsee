@@ -1,0 +1,33 @@
+.footer {
+  background-color: $black;
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 66px;
+    padding-bottom: 58px;
+    padding-inline: 16px;
+
+    @include breakpoint('medium') {
+      gap: 28.5px;
+      padding-bottom: 29px;
+    }
+    .wrapperLogo {
+      max-width: 122px;
+    }
+
+    .wrapperText {
+      color: $white;
+      max-width: 133px;
+      text-align: center;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 500;
+      @include breakpoint('medium') {
+        font-size: 24px;
+        max-width: none;
+      }
+    }
+  }
+}

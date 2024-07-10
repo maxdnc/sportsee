@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 20px;
+  padding-inline: 20px;
+  gap: 27px;
+  width: 100%;
+  max-width: 1040px;
+  margin-inline: auto;
+
+  @include breakpoint('medium') {
+    padding-block: 45px;
+  }
+
+  .wrapperLogo {
+    max-width: 145px;
+
+    @include breakpoint('medium') {
+      max-width: none;
+    }
+  }
+}
