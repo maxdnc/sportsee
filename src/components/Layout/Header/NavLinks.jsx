@@ -11,7 +11,13 @@ const NavLinks = () => {
         Accueil
       </NavLink>
       <NavLink to="/about" className={getNavLinkClassName}>
-        A propos
+        Profil
+      </NavLink>
+      <NavLink to="/" className={getNavLinkClassName}>
+        Réglage
+      </NavLink>
+      <NavLink to="/about" className={getNavLinkClassName}>
+        Communauté
       </NavLink>
     </nav>
   );
