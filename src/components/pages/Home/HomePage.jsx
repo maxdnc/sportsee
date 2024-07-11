@@ -1,7 +1,8 @@
 const HomePage = () => {
   return (
     <>
-      <p> sportsee</p>
+      <h1> Bonjour Thomas</h1>
+      <p>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
     </>
   );
 };
