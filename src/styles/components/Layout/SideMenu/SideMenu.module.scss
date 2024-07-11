@@ -1,0 +1,32 @@
+.sideMenu {
+  background-color: $black;
+  width: 117px;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+
+    .wrapperLogos {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .wrapperText {
+      color: $white;
+      font-size: 12px;
+      font-weight: 500;
+      transform: rotate(-90deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      p {
+        white-space: nowrap;
+      }
+    }
+  }
+}
