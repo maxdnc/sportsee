@@ -1,0 +1,17 @@
+.wrapperText {
+  display: flex;
+  flex-direction: column;
+  gap: 41px;
+
+  .title {
+    font-size: 48px;
+    font-weight: 500;
+    span {
+      color: $primary;
+    }
+  }
+  .description {
+    font-size: 18px;
+    font-weight: 400;
+  }
+}
