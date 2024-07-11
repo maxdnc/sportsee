@@ -1,15 +1,17 @@
 import { Outlet } from 'react-router-dom';
 import Header from './Header/Header';
-import Footer from './Footer/Footer';
+import SideMenu from './SideMenu/SideMenu';
 
 const Layout = () => {
   return (
     <div className="site">
       <Header />
-      <main>
-        <Outlet />
-      </main>
-      <Footer />
+      <div className="layoutDashBoard">
+        <SideMenu />
+        <main>
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };
