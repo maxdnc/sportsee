@@ -1,23 +1,11 @@
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding-block: 20px;
-  padding-inline: 20px;
-  gap: 27px;
+  background-color: $black;
+  height: 91px;
+  padding-inline: 29px;
+  gap: 20px;
   width: 100%;
-  max-width: 1040px;
   margin-inline: auto;
-
-  @include breakpoint('medium') {
-    padding-block: 45px;
-  }
-
-  .wrapperLogo {
-    max-width: 145px;
-
-    @include breakpoint('medium') {
-      max-width: none;
-    }
-  }
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
