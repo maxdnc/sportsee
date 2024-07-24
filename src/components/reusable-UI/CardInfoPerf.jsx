@@ -1,5 +1,5 @@
 import styles from '../../styles/components/reusable-UI/CardInfoPerf.module.scss';
-import caloriesLogo from '../../../public/images/svg/caloriesLogo.svg';
+import caloriesLogo from '/images/svg/caloriesLogo.svg';
 
 const CardInfoPerf = () => {
   return (
