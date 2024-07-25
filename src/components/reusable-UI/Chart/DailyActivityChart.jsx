@@ -56,7 +56,7 @@ const DailyActivityChart = ({ id }) => {
             <span
               className={styles.dot}
               style={{ backgroundColor: colors.cal }}
-            ></span>{' '}
+            ></span>
             Calories brûlées (kCal)
           </div>
         </div>
