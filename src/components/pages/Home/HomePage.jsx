@@ -4,7 +4,8 @@ import DailyActivityChart from '../../reusable-UI/Chart/DailyActivityChart';
 import PerformanceRadarChart from '../../reusable-UI/Chart/PerfomanceRadarChart';
 import ScoreRadarChart from '../../reusable-UI/Chart/ScoreRadarChart';
 import NutritionDashboard from '../../reusable-UI/NutritionDashboard';
-import GreatingMessage from './GreatingMessage';
+import GreetingMessage from './GreatingMessage.jsx';
+
 import {
   sessionUser,
   userActivity,
@@ -27,10 +28,13 @@ const HomePage = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const user = await sessionUser(userId);
-        const activity = await userActivity(userId);
-        const averageSessions = await averageSession(userId);
-        const performance = await performanceSession(userId);
+        const [user, activity, averageSessions, performance] =
+          await Promise.all([
+            sessionUser(userId),
+            userActivity(userId),
+            averageSession(userId),
+            performanceSession(userId),
+          ]);
 
         setData({
           user: user.data,
@@ -50,10 +54,11 @@ const HomePage = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+  if (!data.user) return null;
 
   return (
     <>
-      <GreatingMessage user={data.user} />
+      <GreetingMessage user={data.user} />
       <DailyActivityChart sessions={data.activity} />
       <AverageSessionLineChart sessions={data.averageSessions} />
       <PerformanceRadarChart performanceData={data.performance} />
