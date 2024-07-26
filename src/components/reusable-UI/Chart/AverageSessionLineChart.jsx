@@ -9,32 +9,8 @@ import {
 } from 'recharts';
 
 import styles from '../../../styles/components/reusable-UI/Chart/AverageSessionLineChart.module.scss';
-import { useEffect, useState } from 'react';
-import { averageSession } from '../../../services/api';
 
-const AverageSessionLineChart = ({ id }) => {
-  const [sessions, setSessions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await averageSession(id);
-        setSessions(result.data.sessions);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [id]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
+const AverageSessionLineChart = ({ sessions }) => {
   const weekdays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
   const formatXAxis = (day) => weekdays[day - 1];
 
@@ -50,11 +26,7 @@ const AverageSessionLineChart = ({ id }) => {
   };
 
   const renderColorfulLegendText = (value) => {
-    return (
-      <span style={{ color: '#FFFFFF', opacity: 0.5, fontSize: '15px' }}>
-        {value}
-      </span>
-    );
+    return <span className={styles.legend}>{value}</span>;
   };
 
   return (
