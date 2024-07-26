@@ -60,10 +60,10 @@ const HomePage = () => {
     <>
       <GreetingMessage user={data.user} />
       <DailyActivityChart sessions={data.activity} />
+      <NutritionDashboard keyData={data.user.keyData} />
       <AverageSessionLineChart sessions={data.averageSessions} />
       <PerformanceRadarChart performanceData={data.performance} />
       <ScoreRadarChart score={data.user.score || data.user.todayScore || 0} />
-      <NutritionDashboard keyData={data.user.keyData} />
     </>
   );
 };
