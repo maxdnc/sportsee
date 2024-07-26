@@ -1,36 +1,12 @@
-import { useState, useEffect } from 'react';
 import CardInfoPerf from './CardInfoPerf';
-import { sessionUser } from '../../services/api.js';
 import caloriesIcon from '/images/svg/calories-icon.svg';
 import proteinIcon from '/images/svg/protein-icon.svg';
 import carbIcon from '/images/svg/carb-icon.svg';
 import fatIcon from '/images/svg/fat-icon.svg';
 import styles from '../../styles/components/reusable-UI/NutritionDashboard.module.scss';
 
-const NutritionDashboard = ({ id }) => {
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await sessionUser(id);
-        setUserData(result.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [id]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
-  const { keyData } = userData;
+const NutritionDashboard = ({ keyData }) => {
+  if (!keyData) return null;
 
   const nutritionData = [
     {
