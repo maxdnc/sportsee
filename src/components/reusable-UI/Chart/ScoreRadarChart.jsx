@@ -1,36 +1,13 @@
-import { useEffect, useState } from 'react';
 import {
   RadialBarChart,
   RadialBar,
   PolarAngleAxis,
   ResponsiveContainer,
 } from 'recharts';
-import { sessionUser } from '../../../services/api';
+
 import styles from '../../../styles/components/reusable-UI/Chart/ScoreRadialChart.module.scss';
 
-const ScoreRadialChart = ({ id }) => {
-  const [score, setScore] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await sessionUser(id);
-        setScore(result.data.score || result.data.todayScore || 0);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [id]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
+const ScoreRadialChart = ({ score }) => {
   const scorePercentage = score * 100;
   const data = [{ value: scorePercentage }];
 
