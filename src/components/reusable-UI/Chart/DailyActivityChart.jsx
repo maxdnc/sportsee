@@ -18,6 +18,20 @@ const DailyActivityChart = ({ sessions }) => {
     return Number(valueDay[2]);
   };
 
+  const SimpleBarChartTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className={styles.tooltipWrapper}>
+          <div className={styles.content}>
+            <p className={styles.item}>{payload[0].value}kg</p>
+            <p className={styles.item}>{payload[1].value}kCal</p>
+          </div>
+        </div>
+      );
+    }
+
+    return null;
+  };
   return (
     <div className={styles.cardChart}>
       <div className={styles.wrapperHeader}>
@@ -88,7 +102,7 @@ const DailyActivityChart = ({ sessions }) => {
             radius={[3, 3, 0, 0]}
             barSize={7}
           />
-          <Tooltip />
+          <Tooltip content={<SimpleBarChartTooltip />} />
         </BarChart>
       </ResponsiveContainer>
     </div>
