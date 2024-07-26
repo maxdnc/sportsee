@@ -1,34 +1,12 @@
 import styles from '../../../styles/pages/Home/GreatingMessage.module.scss';
-import { sessionUser } from '../../../services/api';
-import { useEffect, useState } from 'react';
 
-const GreatingMessage = ({ id }) => {
-  const [userFirstName, setUserFirstName] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await sessionUser(id);
-        setUserFirstName(result.data.userInfos.firstName);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [id]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+const GreatingMessage = ({ user }) => {
+  if (!user) return null;
 
   return (
     <div className={styles.wrapperText}>
       <h1 className={styles.title}>
-        Bonjour <span>{userFirstName}</span>
+        Bonjour <span>{user.userInfos.firstName}</span>
       </h1>
       <p className={styles.description}>
         Félicitation ! Vous avez explosé vos objectifs hier{' '}
@@ -39,4 +17,5 @@ const GreatingMessage = ({ id }) => {
     </div>
   );
 };
+
 export default GreatingMessage;
