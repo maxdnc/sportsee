@@ -13,7 +13,7 @@ import {
 } from '../../../services/api';
 
 const HomePage = () => {
-  const userId = 18;
+  const userId = 12;
   const [data, setData] = useState({
     user: null,
     activity: null,
