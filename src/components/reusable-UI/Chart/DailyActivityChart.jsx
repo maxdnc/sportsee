@@ -7,33 +7,11 @@ import {
   Tooltip,
   CartesianGrid,
 } from 'recharts';
-import { userActivity } from '../../../services/api';
-import { useState, useEffect } from 'react';
+
 import styles from '../../../styles/components/reusable-UI/Chart/DailyActivityChart.module.scss';
 
-const DailyActivityChart = ({ id }) => {
-  const [sessions, setSessions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const colors = { kg: '#282D30', cal: '#E60000' };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await userActivity(id);
-        setSessions(result.data.sessions);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [id]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+const DailyActivityChart = ({ sessions }) => {
+  if (!sessions) return null;
 
   const xAxisTickFormat = (value) => {
     const valueDay = value.split('-');
@@ -48,14 +26,14 @@ const DailyActivityChart = ({ id }) => {
           <div className={styles.legend}>
             <span
               className={styles.dot}
-              style={{ backgroundColor: colors.kg }}
+              style={{ backgroundColor: '#282D30' }}
             ></span>
             Poids (kg)
           </div>
           <div className={styles.legend}>
             <span
               className={styles.dot}
-              style={{ backgroundColor: colors.cal }}
+              style={{ backgroundColor: '#E60000' }}
             ></span>
             Calories brûlées (kCal)
           </div>
@@ -98,7 +76,7 @@ const DailyActivityChart = ({ id }) => {
             yAxisId="kg"
             dataKey="kilogram"
             name="Poids (kg)"
-            fill={colors.kg}
+            fill="#282D30"
             radius={[3, 3, 0, 0]}
             barSize={7}
           />
@@ -106,7 +84,7 @@ const DailyActivityChart = ({ id }) => {
             yAxisId="cal"
             dataKey="calories"
             name="Calories brûlées (kCal)"
-            fill={colors.cal}
+            fill="#E60000"
             radius={[3, 3, 0, 0]}
             barSize={7}
           />
