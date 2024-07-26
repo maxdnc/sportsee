@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import {
   PolarAngleAxis,
   PolarGrid,
@@ -6,44 +5,23 @@ import {
   RadarChart,
   ResponsiveContainer,
 } from 'recharts';
-import { performanceSession } from '../../../services/api';
 import styles from '../../../styles/components/reusable-UI/Chart/PerfomanceRadarChart.module.scss';
 
-const PerfomanceRadarChart = ({ id }) => {
-  const [sessions, setSessions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const PerfomanceRadarChart = ({ performanceData }) => {
+  if (!performanceData) return null;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await performanceSession(id);
-        const formattedData = result.data.data.map((item) => ({
-          value: item.value,
-          kind: result.data.kind[item.kind],
-        }));
-        setSessions(formattedData);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [id]);
+  const formatPolarAngleAxis = (kind) =>
+    kind.charAt(0).toUpperCase() + kind.slice(1);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
-  const formatPolarAngleAxis = (kind) => {
-    return kind.charAt(0).toUpperCase() + kind.slice(1);
-  };
+  const formattedData = performanceData.data.map((item) => ({
+    value: item.value,
+    kind: performanceData.kind[item.kind],
+  }));
 
   return (
     <div className={styles.chart}>
       <ResponsiveContainer width="100%" height={250}>
-        <RadarChart cx="50%" cy="50%" outerRadius="70%" data={sessions}>
+        <RadarChart cx="50%" cy="50%" outerRadius="70%" data={formattedData}>
           <PolarGrid radialLines={false} />
           <PolarAngleAxis
             dataKey="kind"
