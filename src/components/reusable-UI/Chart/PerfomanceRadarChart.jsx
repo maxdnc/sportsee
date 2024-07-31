@@ -8,6 +8,7 @@ import {
 import { usePerformanceSession } from '../../../hooks/useApiCall';
 import styles from '../../../styles/components/reusable-UI/Chart/PerfomanceRadarChart.module.scss';
 import ErrorMessage from '../ErrorMessage';
+import Loader from '../Loader';
 
 const PerfomanceRadarChart = ({ userId }) => {
   const {
@@ -17,7 +18,7 @@ const PerfomanceRadarChart = ({ userId }) => {
   } = usePerformanceSession(userId);
 
   if (performanceLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
   if (performanceError) {
     return (

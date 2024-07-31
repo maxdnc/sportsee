@@ -11,6 +11,7 @@ import {
 import { useUserActivity } from '../../../hooks/useApiCall';
 import styles from '../../../styles/components/reusable-UI/Chart/DailyActivityChart.module.scss';
 import ErrorMessage from '../ErrorMessage';
+import Loader from '../Loader';
 
 const DailyActivityChart = ({ userId }) => {
   const {
@@ -20,7 +21,7 @@ const DailyActivityChart = ({ userId }) => {
   } = useUserActivity(userId);
 
   if (activityLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
   if (activityError) {
     return (

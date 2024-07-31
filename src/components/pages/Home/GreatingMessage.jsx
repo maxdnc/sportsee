@@ -1,6 +1,7 @@
 import { useSessionUser } from '../../../hooks/useApiCall';
 import styles from '../../../styles/pages/Home/GreatingMessage.module.scss';
 import ErrorMessage from '../../reusable-UI/ErrorMessage';
+import Loader from '../../reusable-UI/Loader';
 
 const GreatingMessage = ({ userId }) => {
   const {
@@ -10,7 +11,7 @@ const GreatingMessage = ({ userId }) => {
   } = useSessionUser(userId);
 
   if (userLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
   if (userError) {
     return (

@@ -6,6 +6,7 @@ import fatIcon from '/images/svg/fat-icon.svg';
 import styles from '../../styles/components/reusable-UI/NutritionDashboard.module.scss';
 import { useSessionUser } from '../../hooks/useApiCall';
 import ErrorMessage from './ErrorMessage';
+import Loader from './Loader';
 
 const NutritionDashboard = ({ userId }) => {
   const {
@@ -15,7 +16,7 @@ const NutritionDashboard = ({ userId }) => {
   } = useSessionUser(userId);
 
   if (userLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
   if (userError) {
     return (

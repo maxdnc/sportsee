@@ -7,6 +7,7 @@ import {
 import { useSessionUser } from '../../../hooks/useApiCall';
 import styles from '../../../styles/components/reusable-UI/Chart/ScoreRadialChart.module.scss';
 import ErrorMessage from '../ErrorMessage';
+import Loader from '../Loader';
 
 const ScoreRadialChart = ({ userId }) => {
   const {
@@ -16,7 +17,7 @@ const ScoreRadialChart = ({ userId }) => {
   } = useSessionUser(userId);
 
   if (userLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (userError) {
