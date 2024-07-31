@@ -5,8 +5,9 @@ import {
   RadarChart,
   ResponsiveContainer,
 } from 'recharts';
-import styles from '../../../styles/components/reusable-UI/Chart/PerfomanceRadarChart.module.scss';
 import { usePerformanceSession } from '../../../hooks/useApiCall';
+import styles from '../../../styles/components/reusable-UI/Chart/PerfomanceRadarChart.module.scss';
+import ErrorMessage from '../ErrorMessage';
 
 const PerfomanceRadarChart = ({ userId }) => {
   const {
@@ -19,7 +20,14 @@ const PerfomanceRadarChart = ({ userId }) => {
     return <div>Loading...</div>;
   }
   if (performanceError) {
-    return <div>Error: {performanceError}</div>;
+    return (
+      <ErrorMessage
+        message={
+          performanceError ||
+          'Une erreur est survenue. Veuillez réessayer plus tard.'
+        }
+      />
+    );
   }
 
   if (!performanceData) return null;
