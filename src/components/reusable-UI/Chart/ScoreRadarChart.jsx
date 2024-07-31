@@ -1,11 +1,12 @@
 import {
-  RadialBarChart,
-  RadialBar,
   PolarAngleAxis,
+  RadialBar,
+  RadialBarChart,
   ResponsiveContainer,
 } from 'recharts';
-import styles from '../../../styles/components/reusable-UI/Chart/ScoreRadialChart.module.scss';
 import { useSessionUser } from '../../../hooks/useApiCall';
+import styles from '../../../styles/components/reusable-UI/Chart/ScoreRadialChart.module.scss';
+import ErrorMessage from '../ErrorMessage';
 
 const ScoreRadialChart = ({ userId }) => {
   const {
@@ -19,7 +20,13 @@ const ScoreRadialChart = ({ userId }) => {
   }
 
   if (userError) {
-    return <div>Error: {userError}</div>;
+    return (
+      <ErrorMessage
+        message={
+          userError || 'Une erreur est survenue. Veuillez réessayer plus tard.'
+        }
+      />
+    );
   }
 
   if (!userData) {
