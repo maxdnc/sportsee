@@ -1,69 +1,78 @@
-import { useEffect, useState } from 'react';
 import AverageSessionLineChart from '../../reusable-UI/Chart/AverageSessionLineChart';
 import DailyActivityChart from '../../reusable-UI/Chart/DailyActivityChart';
 import PerformanceRadarChart from '../../reusable-UI/Chart/PerfomanceRadarChart';
 import ScoreRadarChart from '../../reusable-UI/Chart/ScoreRadarChart';
 import NutritionDashboard from '../../reusable-UI/NutritionDashboard';
 import GreetingMessage from './GreatingMessage.jsx';
-
+import styles from '../../../styles/pages/Home/HomePage.module.scss';
 import {
-  sessionUser,
-  userActivity,
-  averageSession,
-  performanceSession,
-} from '../../../services/api';
+  useSessionUser,
+  useUserActivity,
+  useAverageSession,
+  usePerformanceSession,
+} from '../../../hooks/useApiCall';
 
 const HomePage = () => {
   const userId = 12;
-  const [data, setData] = useState({
-    user: null,
-    activity: null,
-    averageSessions: null,
-    performance: null,
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const {
+    data: userData,
+    loading: userLoading,
+    error: userError,
+  } = useSessionUser(userId);
+  const {
+    data: activityData,
+    loading: activityLoading,
+    error: activityError,
+  } = useUserActivity(userId);
+  const {
+    data: averageSessionsData,
+    loading: averageSessionsLoading,
+    error: averageSessionsError,
+  } = useAverageSession(userId);
+  const {
+    data: performanceData,
+    loading: performanceLoading,
+    error: performanceError,
+  } = usePerformanceSession(userId);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const [user, activity, averageSessions, performance] =
-          await Promise.all([
-            sessionUser(userId),
-            userActivity(userId),
-            averageSession(userId),
-            performanceSession(userId),
-          ]);
+  if (
+    userLoading ||
+    activityLoading ||
+    averageSessionsLoading ||
+    performanceLoading
+  ) {
+    return <div>Loading...</div>;
+  }
 
-        setData({
-          user: user.data,
-          activity: activity.data.sessions,
-          averageSessions: averageSessions.data.sessions,
-          performance: performance.data,
-        });
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  if (userError || activityError || averageSessionsError || performanceError) {
+    return (
+      <div>
+        Error:{' '}
+        {userError || activityError || averageSessionsError || performanceError}
+      </div>
+    );
+  }
 
-    fetchData();
-  }, [userId]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!data.user) return null;
+  if (!userData || !activityData || !averageSessionsData || !performanceData) {
+    return null;
+  }
 
   return (
     <>
-      <GreetingMessage user={data.user} />
-      <DailyActivityChart sessions={data.activity} />
-      <NutritionDashboard keyData={data.user.keyData} />
-      <AverageSessionLineChart sessions={data.averageSessions} />
-      <PerformanceRadarChart performanceData={data.performance} />
-      <ScoreRadarChart score={data.user.score || data.user.todayScore || 0} />
+      <GreetingMessage user={userData.data} />
+      <div className={styles.homePage}>
+        <DailyActivityChart sessions={activityData.data.sessions} />
+        <NutritionDashboard keyData={userData.data.keyData} />
+        <div className={styles.charts}>
+          <AverageSessionLineChart
+            sessions={averageSessionsData.data.sessions}
+          />
+          <PerformanceRadarChart performanceData={performanceData.data} />
+          <ScoreRadarChart
+            score={userData.data.score || userData.data.todayScore || 0}
+          />
+        </div>
+      </div>
     </>
   );
 };
