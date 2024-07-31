@@ -1,5 +1,6 @@
 import { useSessionUser } from '../../../hooks/useApiCall';
 import styles from '../../../styles/pages/Home/GreatingMessage.module.scss';
+import ErrorMessage from '../../reusable-UI/ErrorMessage';
 
 const GreatingMessage = ({ userId }) => {
   const {
@@ -12,7 +13,13 @@ const GreatingMessage = ({ userId }) => {
     return <div>Loading...</div>;
   }
   if (userError) {
-    return <div>Error: {userError}</div>;
+    return (
+      <ErrorMessage
+        message={
+          userError || 'Une erreur est survenue. Veuillez réessayer plus tard.'
+        }
+      />
+    );
   }
 
   return (
