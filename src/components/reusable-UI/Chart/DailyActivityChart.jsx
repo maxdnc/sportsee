@@ -1,15 +1,16 @@
 import {
-  BarChart,
   Bar,
-  ResponsiveContainer,
-  YAxis,
-  XAxis,
-  Tooltip,
+  BarChart,
   CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from 'recharts';
 
-import styles from '../../../styles/components/reusable-UI/Chart/DailyActivityChart.module.scss';
 import { useUserActivity } from '../../../hooks/useApiCall';
+import styles from '../../../styles/components/reusable-UI/Chart/DailyActivityChart.module.scss';
+import ErrorMessage from '../ErrorMessage';
 
 const DailyActivityChart = ({ userId }) => {
   const {
@@ -22,7 +23,14 @@ const DailyActivityChart = ({ userId }) => {
     return <div>Loading...</div>;
   }
   if (activityError) {
-    return <div>Error: {activityError}</div>;
+    return (
+      <ErrorMessage
+        message={
+          activityError ||
+          'Une erreur est survenue. Veuillez réessayer plus tard.'
+        }
+      />
+    );
   }
 
   if (!activityData) return null;
