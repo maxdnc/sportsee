@@ -9,8 +9,15 @@ import {
 } from 'recharts';
 
 import styles from '../../../styles/components/reusable-UI/Chart/AverageSessionLineChart.module.scss';
+import { useAverageSession } from '../../../hooks/useApiCall';
 
-const AverageSessionLineChart = ({ sessions }) => {
+const AverageSessionLineChart = ({ userId }) => {
+  const {
+    data: averageSessionsData,
+    loading: averageSessionsLoading,
+    error: averageSessionsError,
+  } = useAverageSession(userId);
+
   const weekdays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
   const formatXAxis = (day) => weekdays[day - 1];
 
@@ -29,11 +36,18 @@ const AverageSessionLineChart = ({ sessions }) => {
     return <span className={styles.legend}>{value}</span>;
   };
 
+  if (averageSessionsLoading) {
+    return <div>Loading...</div>;
+  }
+  if (averageSessionsError) {
+    return <div>Error: {averageSessionsError}</div>;
+  }
+
   return (
     <div className={styles.chart}>
       <ResponsiveContainer width="100%" height={263}>
         <LineChart
-          data={sessions}
+          data={averageSessionsData.data.sessions}
           margin={{
             top: 15,
             right: 20,
