@@ -5,6 +5,7 @@ import carbIcon from '/images/svg/carb-icon.svg';
 import fatIcon from '/images/svg/fat-icon.svg';
 import styles from '../../styles/components/reusable-UI/NutritionDashboard.module.scss';
 import { useSessionUser } from '../../hooks/useApiCall';
+import ErrorMessage from './ErrorMessage';
 
 const NutritionDashboard = ({ userId }) => {
   const {
@@ -17,7 +18,13 @@ const NutritionDashboard = ({ userId }) => {
     return <div>Loading...</div>;
   }
   if (userError) {
-    return <div>Error: {userError}</div>;
+    return (
+      <ErrorMessage
+        message={
+          userError || 'Une erreur est survenue. Veuillez réessayer plus tard.'
+        }
+      />
+    );
   }
 
   const nutritionData = [
