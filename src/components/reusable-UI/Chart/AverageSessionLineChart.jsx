@@ -10,6 +10,7 @@ import {
 
 import styles from '../../../styles/components/reusable-UI/Chart/AverageSessionLineChart.module.scss';
 import { useAverageSession } from '../../../hooks/useApiCall';
+import ErrorMessage from '../ErrorMessage';
 
 const AverageSessionLineChart = ({ userId }) => {
   const {
@@ -40,7 +41,14 @@ const AverageSessionLineChart = ({ userId }) => {
     return <div>Loading...</div>;
   }
   if (averageSessionsError) {
-    return <div>Error: {averageSessionsError}</div>;
+    return (
+      <ErrorMessage
+        message={
+          averageSessionsError ||
+          'Une erreur est survenue. Veuillez réessayer plus tard.'
+        }
+      />
+    );
   }
 
   return (
