@@ -9,9 +9,23 @@ import {
 } from 'recharts';
 
 import styles from '../../../styles/components/reusable-UI/Chart/DailyActivityChart.module.scss';
+import { useUserActivity } from '../../../hooks/useApiCall';
 
-const DailyActivityChart = ({ sessions }) => {
-  if (!sessions) return null;
+const DailyActivityChart = ({ userId }) => {
+  const {
+    data: activityData,
+    loading: activityLoading,
+    error: activityError,
+  } = useUserActivity(userId);
+
+  if (activityLoading) {
+    return <div>Loading...</div>;
+  }
+  if (activityError) {
+    return <div>Error: {activityError}</div>;
+  }
+
+  if (!activityData) return null;
 
   const xAxisTickFormat = (value) => {
     const valueDay = value.split('-');
@@ -55,7 +69,7 @@ const DailyActivityChart = ({ sessions }) => {
       </div>
       <ResponsiveContainer width="100%" height={200}>
         <BarChart
-          data={sessions}
+          data={activityData.data.sessions}
           barGap="8"
           margin={{ top: 25, left: 25, right: 25, bottom: 25 }}
         >
