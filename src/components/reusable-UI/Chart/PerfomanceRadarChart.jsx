@@ -6,16 +6,31 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import styles from '../../../styles/components/reusable-UI/Chart/PerfomanceRadarChart.module.scss';
+import { usePerformanceSession } from '../../../hooks/useApiCall';
 
-const PerfomanceRadarChart = ({ performanceData }) => {
+const PerfomanceRadarChart = ({ userId }) => {
+  const {
+    data: performanceData,
+    loading: performanceLoading,
+    error: performanceError,
+  } = usePerformanceSession(userId);
+
+  if (performanceLoading) {
+    return <div>Loading...</div>;
+  }
+  if (performanceError) {
+    return <div>Error: {performanceError}</div>;
+  }
+
   if (!performanceData) return null;
 
   const formatPolarAngleAxis = (kind) =>
     kind.charAt(0).toUpperCase() + kind.slice(1);
 
-  const formattedData = performanceData.data.map((item) => ({
+  const { data, kind } = performanceData.data;
+  const formattedData = data.map((item) => ({
     value: item.value,
-    kind: performanceData.kind[item.kind],
+    kind: kind[item.kind],
   }));
 
   return (
