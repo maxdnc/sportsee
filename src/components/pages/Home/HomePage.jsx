@@ -59,18 +59,14 @@ const HomePage = () => {
 
   return (
     <>
-      <GreetingMessage user={userData.data} />
+      <GreetingMessage userId={userId} />
       <div className={styles.homePage}>
-        <DailyActivityChart sessions={activityData.data.sessions} />
-        <NutritionDashboard keyData={userData.data.keyData} />
+        <DailyActivityChart userId={userId} />
+        <NutritionDashboard userId={userId} />
         <div className={styles.charts}>
-          <AverageSessionLineChart
-            sessions={averageSessionsData.data.sessions}
-          />
-          <PerformanceRadarChart performanceData={performanceData.data} />
-          <ScoreRadarChart
-            score={userData.data.score || userData.data.todayScore || 0}
-          />
+          <AverageSessionLineChart userId={userId} />
+          <PerformanceRadarChart userId={userId} />
+          <ScoreRadarChart userId={userId} />
         </div>
       </div>
     </>
