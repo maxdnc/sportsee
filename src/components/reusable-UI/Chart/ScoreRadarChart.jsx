@@ -4,10 +4,29 @@ import {
   PolarAngleAxis,
   ResponsiveContainer,
 } from 'recharts';
-
 import styles from '../../../styles/components/reusable-UI/Chart/ScoreRadialChart.module.scss';
+import { useSessionUser } from '../../../hooks/useApiCall';
 
-const ScoreRadialChart = ({ score }) => {
+const ScoreRadialChart = ({ userId }) => {
+  const {
+    data: userData,
+    loading: userLoading,
+    error: userError,
+  } = useSessionUser(userId);
+
+  if (userLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (userError) {
+    return <div>Error: {userError}</div>;
+  }
+
+  if (!userData) {
+    return null;
+  }
+
+  const score = userData.data.score || userData.data.todayScore || 0;
   const scorePercentage = score * 100;
   const data = [{ value: scorePercentage }];
 
