@@ -7,7 +7,7 @@ import GreetingMessage from './GreatingMessage.jsx';
 import styles from '../../../styles/pages/Home/HomePage.module.scss';
 
 const HomePage = () => {
-  const userId = 12;
+  const userId = 18;
 
   return (
     <>
