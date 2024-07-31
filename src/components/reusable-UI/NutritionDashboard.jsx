@@ -4,9 +4,21 @@ import proteinIcon from '/images/svg/protein-icon.svg';
 import carbIcon from '/images/svg/carb-icon.svg';
 import fatIcon from '/images/svg/fat-icon.svg';
 import styles from '../../styles/components/reusable-UI/NutritionDashboard.module.scss';
+import { useSessionUser } from '../../hooks/useApiCall';
 
-const NutritionDashboard = ({ keyData }) => {
-  if (!keyData) return null;
+const NutritionDashboard = ({ userId }) => {
+  const {
+    data: userData,
+    loading: userLoading,
+    error: userError,
+  } = useSessionUser(userId);
+
+  if (userLoading) {
+    return <div>Loading...</div>;
+  }
+  if (userError) {
+    return <div>Error: {userError}</div>;
+  }
 
   const nutritionData = [
     {
@@ -36,7 +48,7 @@ const NutritionDashboard = ({ keyData }) => {
         <CardInfoPerf
           key={index}
           icon={item.icon}
-          stat={`${keyData[item.key]}${item.unit}`}
+          stat={`${userData.data.keyData[item.key]}${item.unit}`}
           description={item.description}
         />
       ))}
