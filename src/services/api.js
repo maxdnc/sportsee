@@ -10,7 +10,6 @@ export const apiCall = async (endpoint) => {
     }
     return await response.json();
   } catch (error) {
-    console.error('API call failed:', error);
     if (error.name === 'TypeError') {
       handleNetworkError();
     }
