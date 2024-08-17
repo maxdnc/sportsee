@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styles from '../../../styles/components/Layout/Header/NavLinks.module.scss';
+import UserToggle from '../../pages/Home/UserToggle.jsx';
 
 const NavLinks = () => {
   const getNavLinkClassName = ({ isActive }) =>
@@ -19,6 +20,7 @@ const NavLinks = () => {
       <NavLink to="/about" className={getNavLinkClassName}>
         Communauté
       </NavLink>
+      <UserToggle />
     </nav>
   );
 };
