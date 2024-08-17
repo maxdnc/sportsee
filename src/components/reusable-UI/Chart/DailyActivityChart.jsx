@@ -8,38 +8,25 @@ import {
   YAxis,
 } from 'recharts';
 
-import { useUserActivity } from '../../../hooks/useApiCall';
 import styles from '../../../styles/components/reusable-UI/Chart/DailyActivityChart.module.scss';
 import ErrorMessage from '../ErrorMessage';
 import Loader from '../Loader';
 
-const DailyActivityChart = ({ userId }) => {
-  const {
-    data: activityData,
-    loading: activityLoading,
-    error: activityError,
-  } = useUserActivity(userId);
-
-  if (activityLoading) {
+const DailyActivityChart = ({ data, loading, error }) => {
+  if (loading) {
     return <Loader />;
   }
-  if (activityError) {
+  if (error) {
     return (
       <ErrorMessage
         message={
-          activityError ||
-          'Une erreur est survenue. Veuillez réessayer plus tard.'
+          error || 'Une erreur est survenue. Veuillez réessayer plus tard.'
         }
       />
     );
   }
 
-  if (!activityData) return null;
-
-  const xAxisTickFormat = (value) => {
-    const valueDay = value.split('-');
-    return Number(valueDay[2]);
-  };
+  if (!data) return null;
 
   const SimpleBarChartTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -78,7 +65,7 @@ const DailyActivityChart = ({ userId }) => {
       </div>
       <ResponsiveContainer width="100%" height={200}>
         <BarChart
-          data={activityData.data.sessions}
+          data={data.sessions}
           barGap="8"
           margin={{ top: 25, left: 25, right: 25, bottom: 25 }}
         >
@@ -91,8 +78,7 @@ const DailyActivityChart = ({ userId }) => {
             tickLine={false}
             stroke="#9B9EAC"
             tickMargin={15}
-            dataKey="day"
-            tickFormatter={xAxisTickFormat}
+            dataKey="dayNumber"
             scale="point"
             padding={{ left: 11.4, right: 11 }}
           />
@@ -114,7 +100,7 @@ const DailyActivityChart = ({ userId }) => {
             dataKey="kilogram"
             name="Poids (kg)"
             fill="#282D30"
-            radius={[3, 3, 0, 0]}
+            radius={[7, 7, 0, 0]}
             barSize={7}
           />
           <Bar
@@ -122,7 +108,7 @@ const DailyActivityChart = ({ userId }) => {
             dataKey="calories"
             name="Calories brûlées (kCal)"
             fill="#E60000"
-            radius={[3, 3, 0, 0]}
+            radius={[7, 7, 0, 0]}
             barSize={7}
           />
           <Tooltip content={<SimpleBarChartTooltip />} />
