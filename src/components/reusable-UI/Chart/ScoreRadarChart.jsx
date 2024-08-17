@@ -4,45 +4,36 @@ import {
   RadialBarChart,
   ResponsiveContainer,
 } from 'recharts';
-import { useSessionUser } from '../../../hooks/useApiCall';
 import styles from '../../../styles/components/reusable-UI/Chart/ScoreRadialChart.module.scss';
 import ErrorMessage from '../ErrorMessage';
 import Loader from '../Loader';
 
-const ScoreRadialChart = ({ userId }) => {
-  const {
-    data: userData,
-    loading: userLoading,
-    error: userError,
-  } = useSessionUser(userId);
-
-  if (userLoading) {
+const ScoreRadialChart = ({ data, loading, error }) => {
+  if (loading) {
     return <Loader />;
   }
 
-  if (userError) {
+  if (error) {
     return (
       <ErrorMessage
         message={
-          userError || 'Une erreur est survenue. Veuillez réessayer plus tard.'
+          error || 'Une erreur est survenue. Veuillez réessayer plus tard.'
         }
       />
     );
   }
 
-  if (!userData) {
+  if (!data) {
     return null;
   }
-
-  const score = userData.data.score || userData.data.todayScore || 0;
-  const scorePercentage = score * 100;
-  const data = [{ value: scorePercentage }];
 
   return (
     <div className={styles.chart}>
       <span className={styles.title}>Score</span>
       <div className={styles.content}>
-        <span className={styles.scorePercentage}>{scorePercentage}%</span>
+        <span className={styles.scorePercentage}>
+          {data.dataScore[0].scorePercentage}%
+        </span>
         <p className={styles.descriptionText}>
           de votre
           <br />
@@ -56,7 +47,7 @@ const ScoreRadialChart = ({ userId }) => {
           innerRadius="70%"
           outerRadius="80%"
           barSize={10}
-          data={data}
+          data={data.dataScore}
           startAngle={90}
           endAngle={-270}
         >
@@ -69,7 +60,7 @@ const ScoreRadialChart = ({ userId }) => {
           <RadialBar
             background
             clockWise={false}
-            dataKey="value"
+            dataKey="scorePercentage"
             cornerRadius={10}
             fill="#FF0000"
           />
