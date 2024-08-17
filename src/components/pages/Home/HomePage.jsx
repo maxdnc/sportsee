@@ -5,20 +5,76 @@ import ScoreRadarChart from '../../reusable-UI/Chart/ScoreRadarChart';
 import NutritionDashboard from '../../reusable-UI/NutritionDashboard';
 import GreetingMessage from './GreatingMessage.jsx';
 import styles from '../../../styles/pages/Home/HomePage.module.scss';
+import {
+  useAverageSession,
+  usePerformanceSession,
+  useSessionUser,
+  useUserActivity,
+} from '../../../hooks/useApiCall.js';
 
 const HomePage = () => {
-  const userId = 18;
+  const userId = 12;
+  const {
+    data: activityData,
+    loading: activityLoading,
+    error: activityError,
+  } = useUserActivity(userId);
+
+  const {
+    data: userData,
+    loading: userLoading,
+    error: userError,
+  } = useSessionUser(userId);
+
+  const {
+    data: averageSessionsData,
+    loading: averageSessionsLoading,
+    error: averageSessionsError,
+  } = useAverageSession(userId);
+
+  const {
+    data: performanceData,
+    loading: performanceLoading,
+    error: performanceError,
+  } = usePerformanceSession(userId);
 
   return (
     <>
-      <GreetingMessage userId={userId} />
+      <GreetingMessage
+        data={userData}
+        loading={userLoading}
+        error={userError}
+        customMessage="Voici votre activité quotidienne"
+      />
+
       <div className={styles.homePage}>
-        <DailyActivityChart userId={userId} />
-        <NutritionDashboard userId={userId} />
+        <DailyActivityChart
+          data={activityData}
+          loading={activityLoading}
+          error={activityError}
+        />
+        <NutritionDashboard
+          data={userData}
+          loading={userLoading}
+          error={userError}
+        />
+
         <div className={styles.charts}>
-          <AverageSessionLineChart userId={userId} />
-          <PerformanceRadarChart userId={userId} />
-          <ScoreRadarChart userId={userId} />
+          <AverageSessionLineChart
+            data={averageSessionsData}
+            loading={averageSessionsLoading}
+            error={averageSessionsError}
+          />
+          <PerformanceRadarChart
+            data={performanceData}
+            loading={performanceLoading}
+            error={performanceError}
+          />
+          <ScoreRadarChart
+            data={userData}
+            loading={userLoading}
+            error={userError}
+          />
         </div>
       </div>
     </>
