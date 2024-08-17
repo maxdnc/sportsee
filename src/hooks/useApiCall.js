@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import { apiCall } from '../services/api';
+import { standardizeActivityData } from '../utils/dataStandardization/activityDataStandardization';
+import { standardizeUserData } from '../utils/dataStandardization/userDataStandardization';
+import { standardizeAverageSessions } from '../utils/dataStandardization/averageSessionsDataStandardization';
+import { standardizePerformanceData } from '../utils/dataStandardization/performanceDataStandardization';
 
-export const useApiCall = (endpoint) => {
+export const useApiCall = (endpoint, standardizeFunction) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +15,10 @@ export const useApiCall = (endpoint) => {
       try {
         setLoading(true);
         const result = await apiCall(endpoint);
-        setData(result);
+        const standardizedData = standardizeFunction
+          ? standardizeFunction(result)
+          : result;
+        setData(standardizedData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -20,14 +27,19 @@ export const useApiCall = (endpoint) => {
     };
 
     fetchData();
-  }, [endpoint]);
+  }, [endpoint, standardizeFunction]);
 
   return { data, loading, error };
 };
 
-export const useSessionUser = (id) => useApiCall(`/user/${id}`);
-export const useUserActivity = (id) => useApiCall(`/user/${id}/activity`);
+export const useSessionUser = (id) =>
+  useApiCall(`/user/${id}`, standardizeUserData);
+
+export const useUserActivity = (id) =>
+  useApiCall(`/user/${id}/activity`, standardizeActivityData);
+
 export const useAverageSession = (id) =>
-  useApiCall(`/user/${id}/average-sessions`);
+  useApiCall(`/user/${id}/average-sessions`, standardizeAverageSessions);
+
 export const usePerformanceSession = (id) =>
-  useApiCall(`/user/${id}/performance`);
+  useApiCall(`/user/${id}/performance`, standardizePerformanceData);
