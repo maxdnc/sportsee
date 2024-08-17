@@ -5,15 +5,18 @@ import ScoreRadarChart from '../../reusable-UI/Chart/ScoreRadarChart';
 import NutritionDashboard from '../../reusable-UI/NutritionDashboard';
 import GreetingMessage from './GreatingMessage.jsx';
 import styles from '../../../styles/pages/Home/HomePage.module.scss';
+
 import {
   useAverageSession,
   usePerformanceSession,
   useSessionUser,
   useUserActivity,
 } from '../../../hooks/useApiCall.js';
+import { useContext } from 'react';
+import { UserContext } from '../../../context/UserContext.jsx';
 
 const HomePage = () => {
-  const userId = 12;
+  const { userId } = useContext(UserContext);
   const {
     data: activityData,
     loading: activityLoading,
