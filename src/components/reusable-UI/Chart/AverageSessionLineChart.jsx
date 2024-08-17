@@ -9,20 +9,11 @@ import {
 } from 'recharts';
 
 import styles from '../../../styles/components/reusable-UI/Chart/AverageSessionLineChart.module.scss';
-import { useAverageSession } from '../../../hooks/useApiCall';
+
 import ErrorMessage from '../ErrorMessage';
 import Loader from '../Loader';
 
-const AverageSessionLineChart = ({ userId }) => {
-  const {
-    data: averageSessionsData,
-    loading: averageSessionsLoading,
-    error: averageSessionsError,
-  } = useAverageSession(userId);
-
-  const weekdays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
-  const formatXAxis = (day) => weekdays[day - 1];
-
+const AverageSessionLineChart = ({ data, loading, error }) => {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
@@ -38,15 +29,14 @@ const AverageSessionLineChart = ({ userId }) => {
     return <span className={styles.legend}>{value}</span>;
   };
 
-  if (averageSessionsLoading) {
+  if (loading) {
     return <Loader />;
   }
-  if (averageSessionsError) {
+  if (error) {
     return (
       <ErrorMessage
         message={
-          averageSessionsError ||
-          'Une erreur est survenue. Veuillez réessayer plus tard.'
+          error || 'Une erreur est survenue. Veuillez réessayer plus tard.'
         }
       />
     );
@@ -56,7 +46,7 @@ const AverageSessionLineChart = ({ userId }) => {
     <div className={styles.chart}>
       <ResponsiveContainer width="100%" height={263}>
         <LineChart
-          data={averageSessionsData.data.sessions}
+          data={data.sessions}
           margin={{
             top: 15,
             right: 20,
@@ -86,7 +76,6 @@ const AverageSessionLineChart = ({ userId }) => {
             axisLine={false}
             tickLine={false}
             stroke="white"
-            tickFormatter={formatXAxis}
             tick={{ fill: '#FFFFFF', opacity: '0.5' }}
           />
 
