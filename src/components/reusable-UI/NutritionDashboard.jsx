@@ -1,54 +1,22 @@
 import CardInfoPerf from './CardInfoPerf';
-import caloriesIcon from '/images/svg/calories-icon.svg';
-import proteinIcon from '/images/svg/protein-icon.svg';
-import carbIcon from '/images/svg/carb-icon.svg';
-import fatIcon from '/images/svg/fat-icon.svg';
 import styles from '../../styles/components/reusable-UI/NutritionDashboard.module.scss';
-import { useSessionUser } from '../../hooks/useApiCall';
 import ErrorMessage from './ErrorMessage';
 import Loader from './Loader';
+import { nutritionData } from '../../utils/dataStandardization/nutritionDataStandardization';
 
-const NutritionDashboard = ({ userId }) => {
-  const {
-    data: userData,
-    loading: userLoading,
-    error: userError,
-  } = useSessionUser(userId);
-
-  if (userLoading) {
+const NutritionDashboard = ({ data, loading, error }) => {
+  if (loading) {
     return <Loader />;
   }
-  if (userError) {
+  if (error) {
     return (
       <ErrorMessage
         message={
-          userError || 'Une erreur est survenue. Veuillez réessayer plus tard.'
+          error || 'Une erreur est survenue. Veuillez réessayer plus tard.'
         }
       />
     );
   }
-
-  const nutritionData = [
-    {
-      icon: caloriesIcon,
-      key: 'calorieCount',
-      unit: 'kCal',
-      description: 'Calories',
-    },
-    {
-      icon: proteinIcon,
-      key: 'proteinCount',
-      unit: 'g',
-      description: 'Proteines',
-    },
-    {
-      icon: carbIcon,
-      key: 'carbohydrateCount',
-      unit: 'g',
-      description: 'Glucides',
-    },
-    { icon: fatIcon, key: 'lipidCount', unit: 'g', description: 'Lipides' },
-  ];
 
   return (
     <div className={styles.nutritionWrapper}>
@@ -56,7 +24,7 @@ const NutritionDashboard = ({ userId }) => {
         <CardInfoPerf
           key={index}
           icon={item.icon}
-          stat={`${userData.data.keyData[item.key]}${item.unit}`}
+          stat={`${data.keyData[item.key]}${item.unit}`}
           description={item.description}
         />
       ))}
