@@ -5,10 +5,12 @@ export const MOCK_USER_INFO = {
     lastName: 'Doe',
     age: 30,
   },
-  dataScore: {
-    score: 0.12,
-    scorePercentage: 12,
-  },
+  dataScore: [
+    {
+      score: 0.8,
+      scorePercentage: 80,
+    },
+  ],
   keyData: {
     calorieCount: 2000,
     proteinCount: 150,
