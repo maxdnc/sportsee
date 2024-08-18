@@ -1,8 +1,8 @@
-import AverageSessionLineChart from '../../reusable-UI/Chart/AverageSessionLineChart';
-import DailyActivityChart from '../../reusable-UI/Chart/DailyActivityChart';
-import PerformanceRadarChart from '../../reusable-UI/Chart/PerfomanceRadarChart';
-import ScoreRadarChart from '../../reusable-UI/Chart/ScoreRadarChart';
-import NutritionDashboard from '../../reusable-UI/NutritionDashboard';
+import AverageSessionLineChart from './Chart/AverageSessionLineChart.jsx';
+import DailyActivityChart from './Chart/DailyActivityChart';
+import PerformanceRadarChart from './Chart/PerfomanceRadarChart';
+import ScoreRadarChart from './Chart/ScoreRadarChart';
+import NutritionDashboard from './NutritionDashboard';
 import GreetingMessage from './GreatingMessage.jsx';
 import styles from '../../../styles/pages/Home/HomePage.module.scss';
 

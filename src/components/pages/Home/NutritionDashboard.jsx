@@ -1,8 +1,8 @@
-import CardInfoPerf from './CardInfoPerf';
-import styles from '../../styles/components/reusable-UI/NutritionDashboard.module.scss';
-import ErrorMessage from './ErrorMessage';
-import Loader from './Loader';
-import { nutritionData } from '../../utils/dataStandardization/nutritionDataStandardization';
+import CardInfoPerf from '../../reusable-UI/CardInfoPerf';
+import styles from '../../../styles/pages/Home/NutritionDashboard.module.scss';
+import ErrorMessage from '../../reusable-UI/ErrorMessage';
+import Loader from '../../reusable-UI/Loader';
+import { nutritionData } from '../../../utils/dataStandardization/nutritionDataStandardization';
 
 const NutritionDashboard = ({ data, loading, error }) => {
   if (loading) {

@@ -7,9 +7,9 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import styles from '../../../styles/components/reusable-UI/Chart/AverageSessionLineChart.module.scss';
-import ErrorMessage from '../ErrorMessage';
-import Loader from '../Loader';
+import styles from '../../../../styles/pages/Home/Chart/AverageSessionLineChart.module.scss';
+import ErrorMessage from '../../../reusable-UI/ErrorMessage';
+import Loader from '../../../reusable-UI/Loader';
 
 const AverageSessionLineChart = ({ data, loading, error }) => {
   const CustomTooltip = ({ active, payload }) => {

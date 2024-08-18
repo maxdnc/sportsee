@@ -8,9 +8,9 @@ import {
   YAxis,
 } from 'recharts';
 
-import styles from '../../../styles/components/reusable-UI/Chart/DailyActivityChart.module.scss';
-import ErrorMessage from '../ErrorMessage';
-import Loader from '../Loader';
+import styles from '../../../../styles/pages/Home/Chart/DailyActivityChart.module.scss';
+import ErrorMessage from '../../../reusable-UI/ErrorMessage';
+import Loader from '../../../reusable-UI/Loader';
 
 const DailyActivityChart = ({ data, loading, error }) => {
   if (loading) {

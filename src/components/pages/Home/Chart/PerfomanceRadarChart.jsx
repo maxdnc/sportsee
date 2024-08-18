@@ -5,9 +5,9 @@ import {
   RadarChart,
   ResponsiveContainer,
 } from 'recharts';
-import styles from '../../../styles/components/reusable-UI/Chart/PerfomanceRadarChart.module.scss';
-import ErrorMessage from '../ErrorMessage';
-import Loader from '../Loader';
+import styles from '../../../../styles/pages/Home/Chart/PerfomanceRadarChart.module.scss';
+import ErrorMessage from '../../../reusable-UI/ErrorMessage';
+import Loader from '../../../reusable-UI/Loader';
 
 const PerfomanceRadarChart = ({ data, loading, error }) => {
   if (loading) {

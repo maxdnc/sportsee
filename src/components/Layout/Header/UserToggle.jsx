@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import styles from '../../../styles/pages/Home/UserToggle.module.scss';
+import styles from '../../../styles/components/Layout/Header/UserToggle.module.scss';
 import { UserContext } from '../../../context/UserContext.jsx';
 
 const UserToggle = () => {

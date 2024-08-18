@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styles from '../../../styles/components/Layout/Header/NavLinks.module.scss';
-import UserToggle from '../../pages/Home/UserToggle.jsx';
+import UserToggle from './UserToggle.jsx';
 
 const NavLinks = () => {
   const getNavLinkClassName = ({ isActive }) =>

@@ -4,9 +4,9 @@ import {
   RadialBarChart,
   ResponsiveContainer,
 } from 'recharts';
-import styles from '../../../styles/components/reusable-UI/Chart/ScoreRadialChart.module.scss';
-import ErrorMessage from '../ErrorMessage';
-import Loader from '../Loader';
+import styles from '../../../../styles/pages/Home/Chart/ScoreRadialChart.module.scss';
+import ErrorMessage from '../../../reusable-UI/ErrorMessage';
+import Loader from '../../../reusable-UI/Loader';
 
 const ScoreRadialChart = ({ data, loading, error }) => {
   if (loading) {
