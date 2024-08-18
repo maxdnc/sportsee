@@ -6,79 +6,28 @@ import NutritionDashboard from '../../reusable-UI/NutritionDashboard';
 import GreetingMessage from './GreatingMessage.jsx';
 import styles from '../../../styles/pages/Home/HomePage.module.scss';
 
-import {
-  useAverageSession,
-  usePerformanceSession,
-  useSessionUser,
-  useUserActivity,
-} from '../../../hooks/useApiCall.js';
-import { useContext } from 'react';
-import { UserContext } from '../../../context/UserContext.jsx';
 import { generateCustomMessage } from '../../../utils/generateCustomMessage.js';
+import { MOCK_USER_INFO } from '../../../constants/mocks/mockUserInfo';
+import { MOCK_USER_ACTIVITY } from '../../../constants/mocks/mockUserActivity';
+import { MOCK_USER_AVERAGE_SESSION } from '../../../constants/mocks/mockUserAverageSession';
+import { MOCK_USER_PERFORMANCE } from '../../../constants/mocks/mockUserPerformance';
 
 const HomePage = () => {
-  const { userId } = useContext(UserContext);
-  const {
-    data: activityData,
-    loading: activityLoading,
-    error: activityError,
-  } = useUserActivity(userId);
-
-  const {
-    data: userData,
-    loading: userLoading,
-    error: userError,
-  } = useSessionUser(userId);
-
-  const {
-    data: averageSessionsData,
-    loading: averageSessionsLoading,
-    error: averageSessionsError,
-  } = useAverageSession(userId);
-
-  const {
-    data: performanceData,
-    loading: performanceLoading,
-    error: performanceError,
-  } = usePerformanceSession(userId);
-
   return (
     <>
       <GreetingMessage
-        data={userData}
-        loading={userLoading}
-        error={userError}
-        customMessage={generateCustomMessage(userData)}
+        data={MOCK_USER_INFO}
+        customMessage={generateCustomMessage(MOCK_USER_INFO)}
       />
 
       <div className={styles.homePage}>
-        <DailyActivityChart
-          data={activityData}
-          loading={activityLoading}
-          error={activityError}
-        />
-        <NutritionDashboard
-          data={userData}
-          loading={userLoading}
-          error={userError}
-        />
+        <DailyActivityChart data={MOCK_USER_ACTIVITY} />
+        <NutritionDashboard data={MOCK_USER_INFO} />
 
         <div className={styles.charts}>
-          <AverageSessionLineChart
-            data={averageSessionsData}
-            loading={averageSessionsLoading}
-            error={averageSessionsError}
-          />
-          <PerformanceRadarChart
-            data={performanceData}
-            loading={performanceLoading}
-            error={performanceError}
-          />
-          <ScoreRadarChart
-            data={userData}
-            loading={userLoading}
-            error={userError}
-          />
+          <AverageSessionLineChart data={MOCK_USER_AVERAGE_SESSION} />
+          <PerformanceRadarChart data={MOCK_USER_PERFORMANCE} />
+          <ScoreRadarChart data={MOCK_USER_INFO} />
         </div>
       </div>
     </>
