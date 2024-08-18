@@ -1,4 +1,3 @@
-// src/data/nutritionData.js
 import caloriesIcon from '/images/svg/calories-icon.svg';
 import proteinIcon from '/images/svg/protein-icon.svg';
 import carbIcon from '/images/svg/carb-icon.svg';
