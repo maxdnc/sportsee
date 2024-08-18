@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import styles from '../../../styles/pages/Home/UserToggle.module.scss';
 import { UserContext } from '../../../context/UserContext.jsx';
 
@@ -8,6 +8,10 @@ const UserToggle = () => {
   const toggleUser = () => {
     setUserId(userId === 12 ? 18 : 12);
   };
+
+  useEffect(() => {
+    localStorage.setItem('userId', userId.toString());
+  }, [userId]);
 
   return (
     <div className={styles['toggle-container']}>

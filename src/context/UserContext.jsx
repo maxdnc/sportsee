@@ -1,9 +1,16 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [userId, setUserId] = useState(12);
+  const [userId, setUserId] = useState(() => {
+    const savedUserId = localStorage.getItem('userId');
+    return savedUserId ? parseInt(savedUserId, 10) : 12;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('userId', userId.toString());
+  }, [userId]);
 
   return (
     <UserContext.Provider value={{ userId, setUserId }}>
