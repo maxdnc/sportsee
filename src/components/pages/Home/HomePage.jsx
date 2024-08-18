@@ -14,6 +14,7 @@ import {
 } from '../../../hooks/useApiCall.js';
 import { useContext } from 'react';
 import { UserContext } from '../../../context/UserContext.jsx';
+import { generateCustomMessage } from '../../../utils/generateCustomMessage.js';
 
 const HomePage = () => {
   const { userId } = useContext(UserContext);
@@ -47,7 +48,7 @@ const HomePage = () => {
         data={userData}
         loading={userLoading}
         error={userError}
-        customMessage="Voici votre activité quotidienne"
+        customMessage={generateCustomMessage(userData)}
       />
 
       <div className={styles.homePage}>
