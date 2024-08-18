@@ -1,15 +1,13 @@
 import {
-  LineChart,
-  Line,
-  XAxis,
-  Tooltip,
-  ResponsiveContainer,
   Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
   YAxis,
 } from 'recharts';
-
 import styles from '../../../styles/components/reusable-UI/Chart/AverageSessionLineChart.module.scss';
-
 import ErrorMessage from '../ErrorMessage';
 import Loader from '../Loader';
 
