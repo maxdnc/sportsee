@@ -10,7 +10,7 @@ export function standardizeUserData(apiData) {
   ];
 
   return {
-    id: data.id,
+    userId: data.id,
     userInfos: {
       firstName: data.userInfos.firstName,
       lastName: data.userInfos.lastName,
