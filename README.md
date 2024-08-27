@@ -1,5 +1,10 @@
 ## Installation
 
+## Configuration de l'environnement
+
+1. Copiez `.env.example` en `.env`
+2. Modifiez les valeurs dans `.env` selon vos besoins
+
 ### Prérequis
 
 - [NodeJS (**version 12.18**)](https://nodejs.org/en/)
