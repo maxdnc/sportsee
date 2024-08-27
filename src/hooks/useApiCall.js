@@ -20,33 +20,33 @@ export const useApiCall = (endpoint, standardizeFunction, mockData) => {
       setLoading(true);
       setError(null);
 
+      const useMockData = import.meta.env.VITE_USE_MOCK_DATA === 'true';
       const userId = parseInt(endpoint.split('/')[2]);
-      const mockResult = mockData.find((item) => item.userId === userId);
 
-      if (mockResult) {
-        setData(mockResult);
+      if (useMockData) {
+        const mockResult = mockData.find((item) => item.userId === userId);
+        if (mockResult) {
+          setData(mockResult);
+        } else {
+          try {
+            handleMockDataNotFound();
+          } catch (mockError) {
+            setError(mockError.message);
+          }
+        }
+        setLoading(false);
       } else {
         try {
-          handleMockDataNotFound();
-        } catch (mockError) {
-          setError(mockError.message);
-        }
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const result = await apiCall(endpoint);
-        const apiData = standardizeFunction
-          ? standardizeFunction(result)
-          : result;
-        setData(apiData);
-      } catch (err) {
-        if (!mockResult) {
+          const result = await apiCall(endpoint);
+          const apiData = standardizeFunction
+            ? standardizeFunction(result)
+            : result;
+          setData(apiData);
+        } catch (err) {
           setError(err.message || 'An error occurred while fetching the data.');
+        } finally {
+          setLoading(false);
         }
-      } finally {
-        setLoading(false);
       }
     };
 
